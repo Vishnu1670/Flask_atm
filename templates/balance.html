@@ -1,0 +1,11 @@
+<h2>Check Balance</h2>
+
+<input type="password" id="password" placeholder="Enter password">
+<input type="hidden" id="acc_no" value="{{ acc_no }}">
+
+<button id="checkBalanceBtn">Show Balance</button>
+
+<br><br>
+<button onclick="window.location.href='/home/dashboard/{{ acc_no }}'">Back</button>
+
+<script src="{{ url_for('static', filename='js/dashbord.js') }}"></script>

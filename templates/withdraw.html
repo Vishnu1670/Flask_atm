@@ -1,0 +1,8 @@
+<h2>Withdraw Money</h2>
+
+<input type="number" id="amount">
+<input type="hidden" id="acc_no" value="{{ acc_no }}">
+
+<button id="withdrawBtn">Withdraw</button><br><br>
+<button onclick="window.location.href='/home/dashboard/{{ acc_no }}'">Back</button>
+<script src="{{ url_for('static', filename='js/dashbord.js') }}"></script>

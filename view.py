@@ -118,6 +118,29 @@ def deposit():
 
     return jsonify({"message": "Deposit successful"})
 
+@api.route('/home/deposit_page/<acc_no>')
+def deposit_page(acc_no):
+    return render_template("deposit.html", acc_no=acc_no)
+
+@api.route('/home/withdraw_page/<acc_no>')
+def withdraw_page(acc_no):
+    return render_template("withdraw.html", acc_no=acc_no)
+
+@api.route('/home/balance_page/<acc_no>')
+def balance_page(acc_no):
+    return render_template("balance.html", acc_no=acc_no)
+
+@api.route('/home/change_pin_page/<acc_no>')
+def change_pin_page(acc_no):
+    return render_template("change_pin.html", acc_no=acc_no)
+
+@api.route('/home/transfer_page/<acc_no>')
+def transfer_page(acc_no):
+    return render_template("transfer.html", acc_no=acc_no)
+
+@api.route('/home/transactions_page/<acc_no>')
+def transactions_page(acc_no):
+    return render_template("transactions.html", acc_no=acc_no)
 
 # WITHDRAW
 @api.route('/home/withdraw', methods=['POST'])
@@ -148,12 +171,18 @@ def withdraw():
 
 
 # BALANCE
-@api.route('/home/balance/<acc_no>')
-def balance(acc_no):
+@api.route('/home/check_balance', methods=['POST'])
+def check_balance():
+    acc_no = request.form.get("acc_no")
+    pin = request.form.get("pin")
+
     account = Account.query.get(acc_no)
 
     if not account:
         return jsonify({"error": "Account not found"}), 404
+
+    if account.pin != int(pin):
+        return jsonify({"error": "Wrong PIN"}), 401
 
     return jsonify({"balance": account.balance})
 
