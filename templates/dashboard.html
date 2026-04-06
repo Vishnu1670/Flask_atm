@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<center>
+    <h1>Welcome {{ account.name }}</h1>
+    <p>Account No: {{ account.acc_no }}</p>
+    <p>Balance: ₹{{ account.balance }}</p>
+</center><br>
+
+<h2>ATM Options</h2>
+
+<button onclick="showSection('deposit')">Deposit</button>
+<button onclick="showSection('withdraw')">Withdraw</button>
+<button onclick="checkBalance()">Balance</button>
+<button onclick="showSection('pin')">Change PIN</button>
+<button onclick="showSection('transfer')">Transfer</button>
+<button onclick="loadTransactions()">Statement</button>
+<button onclick="deleteAccount()">Delete Account</button>
+
+<div id="output"></div>
+
+<!-- Deposit -->
+<div id="deposit" style="display:none;">
+    <input type="number" id="deposit_amt" placeholder="Amount">
+    <button onclick="deposit()">Submit</button>
+</div>
+
+<!-- Withdraw -->
+<div id="withdraw" style="display:none;">
+    <input type="number" id="withdraw_amt">
+    <button onclick="withdraw()">Submit</button>
+</div>
+
+<!-- Change PIN -->
+<div id="pin" style="display:none;">
+    <input type="password" id="old_pin" placeholder="Old PIN">
+    <input type="password" id="new_pin" placeholder="New PIN">
+    <button onclick="changePin()">Submit</button>
+</div>
+
+<!-- Transfer -->
+<div id="transfer" style="display:none;">
+    <input type="text" id="to_acc" placeholder="To Account">
+    <input type="number" id="transfer_amt">
+    <button onclick="transfer()">Send</button>
+</div>
+
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
