@@ -136,7 +136,7 @@ def change_pin_page(acc_no):
 
 @api.route('/home/transfer_page/<acc_no>')
 def transfer_page(acc_no):
-    return render_template("transfer.html", acc_no=acc_no)
+    return render_template("fund_transfer.html", acc_no=acc_no)
 
 @api.route('/home/transactions_page/<acc_no>')
 def transactions_page(acc_no):
@@ -224,6 +224,10 @@ def transfer():
 
     if not sender or not receiver:
         return jsonify({"error": "Account not found"}), 404
+    
+    if sender == receiver:
+        return jsonify({"error":"you can't transfer the money to your own account"})
+
 
     if sender.balance < amount:
         return jsonify({"error": "Insufficient balance"}), 400

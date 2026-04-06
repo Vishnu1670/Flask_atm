@@ -166,3 +166,114 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
+
+//transfer
+document.addEventListener("DOMContentLoaded", function(){
+
+    let transferBtn = document.getElementById("transfer");
+
+    if(transferBtn){
+
+        transferBtn.addEventListener("click", function(){
+
+            let to_acc = document.getElementById("to_acc").value;
+            let amount = document.getElementById("amount").value;
+
+            // acc_no comes from Jinja
+            let from_acc = document.getElementById("from_acc").value;
+
+            if(!to_acc || !amount){
+                alert("Please fill all fields");
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append("from_acc", from_acc);
+            formData.append("to_acc", to_acc);
+            formData.append("amount", amount);
+
+            fetch("/home/transfer", {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+
+                if(data.error){
+                    alert(data.error);
+                } else {
+                    alert(data.message);
+
+                    // redirect back to dashboard after success
+                    window.location.href = `/home/dashboard/${from_acc}`;
+                }
+
+            })
+            .catch(err => {
+                console.log(err);
+                alert("Transfer failed");
+            });
+
+        });
+
+    }
+
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    let accInput = document.getElementById("acc_no");
+
+    if(!accInput){
+        console.log("acc_no not found");
+        return;
+    }
+
+    let acc_no = accInput.value;
+
+    window.loadTransactions = function(){
+
+        fetch(`/home/transactions/${acc_no}`)
+        .then(res => {
+
+            if(!res.ok){
+                throw new Error("Failed to fetch");
+            }
+
+            return res.json();
+        })
+        .then(data => {
+
+            let listDiv = document.getElementById("list");
+            listDiv.innerHTML = "";
+
+            if(data.length === 0){
+                listDiv.innerHTML = "<p>No transactions found</p>";
+                return;
+            }
+
+            data.forEach(txn => {
+
+                let item = document.createElement("div");
+                item.style.border = "1px solid #ccc";
+                item.style.padding = "8px";
+                item.style.margin = "5px";
+
+                item.innerHTML = `
+                    <strong>${txn.message}</strong><br>
+                    <small>${txn.date}</small>
+                `;
+
+                listDiv.appendChild(item);
+
+            });
+
+        })
+        .catch(err => {
+            console.log(err);
+            alert("Error loading transactions");
+        });
+
+    }
+
+});
