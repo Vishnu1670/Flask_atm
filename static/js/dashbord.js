@@ -103,3 +103,66 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
+
+//change pin
+document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById("changePinBtn").addEventListener("click", function() {
+
+        let acc_no = document.getElementById("acc_no").value;
+        let oldPinInput = document.getElementById("old_pin");
+        let newPinInput = document.getElementById("new_pin");
+        let confirmPinInput = document.getElementById("conform_pin");
+
+        let old_pin = oldPinInput.value;
+        let new_pin = newPinInput.value;
+        let conform_pin = confirmPinInput.value;
+
+        // ✅ validation
+        if (!old_pin || !new_pin || !conform_pin) {
+            alert("All fields are required");
+            return;
+        }
+
+        if (new_pin == old_pin){
+            alert("New pin can't be same as old pin");
+            return;
+        }
+
+        if (new_pin.length !== 4 || isNaN(new_pin)) {
+            alert("New PIN must be 4 digits");
+            return;
+        }
+
+        if (new_pin !== conform_pin) {
+            alert("New PIN and Confirm PIN must match");
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append("acc_no", acc_no);
+        formData.append("old_pin", old_pin);
+        formData.append("new_pin", new_pin);
+        formData.append("conform_pin", conform_pin);
+
+        fetch("/home/change_pin", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            alert(data.message || data.error);
+
+            // ✅ clear inputs on success
+            if (data.message) {
+                oldPinInput.value = "";
+                newPinInput.value = "";
+                confirmPinInput.value = "";
+            }
+
+        });
+
+    });
+
+});

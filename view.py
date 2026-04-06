@@ -193,11 +193,18 @@ def change_pin():
     acc_no = request.form.get('acc_no')
     old_pin = request.form.get('old_pin')
     new_pin = request.form.get('new_pin')
+    con_pin = request.form.get('conform_pin')
 
     account = Account.query.get(acc_no)
 
     if not account or account.pin != int(old_pin):
         return jsonify({"error": "Invalid PIN"}), 400
+    
+    if new_pin == old_pin:
+        return jsonify({"error":"New pin can't be same as old pin"}),400
+    
+    if new_pin != con_pin:
+        return jsonify({"error": "Both PINs must match"}), 400
 
     account.pin = int(new_pin)
     db.session.commit()
