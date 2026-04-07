@@ -6,7 +6,7 @@ from view import api  #It imports the Blueprint (api) from view.py into app.py
 #Create a web app and name it using this file
 app = Flask(__name__) 
 
-#To connect the python and Mysql
+#To connect the python and Mysql 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1122@localhost/atm'
 #It disables tracking of object changes in SQLAlchemy.
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

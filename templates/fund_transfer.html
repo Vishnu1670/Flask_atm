@@ -1,0 +1,13 @@
+<h2>Fund Transfer</h2>
+
+<input type="hidden" id="from_acc" value="{{ acc_no }}">
+
+<input type="text" id="to_acc" placeholder="To Account"><br><br>
+<input type="number" id="amount" placeholder="Amount"><br><br>
+
+<button id="transfer">Send</button>
+
+<br><br>
+<button onclick="window.location.href='/home/dashboard/{{ acc_no }}'">Back</button>
+
+<script src="{{ url_for('static', filename='js/dashbord.js') }}"></script>

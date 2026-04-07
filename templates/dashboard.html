@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<center>
+    <h1>Welcome {{ account.name }}</h1>
+    <p>Account No: {{ account.acc_no }}</p>
+</center>
+
+<hr>
+
+<h2>ATM Options</h2>
+
+<br>
+
+<button onclick="window.location.href='/home/deposit_page/{{ account.acc_no }}'">
+    Deposit
+</button><br><br>
+
+<button onclick="window.location.href='/home/withdraw_page/{{ account.acc_no }}'">
+    Withdraw
+</button><br><br>
+
+<button onclick="window.location.href='/home/balance_page/{{ account.acc_no }}'">
+    Balance Enquiry
+</button><br><br>
+
+<button onclick="window.location.href='/home/change_pin_page/{{ account.acc_no }}'">
+    Change PIN
+</button><br><br>
+
+<button onclick="window.location.href='/home/transfer_page/{{ account.acc_no }}'">
+    Fund Transfer
+</button><br><br>
+
+<button onclick="window.location.href='/home/transactions_page/{{ account.acc_no }}'">
+    Transaction Statement
+</button><br><br>
+
+<button id="delete_btn" data-acc="{{ account.acc_no }}">
+    Delete Account
+</button>
+
+<hr>
+
+<button onclick="window.location.href='/home/login'">
+    Logout
+</button>
+
+</body>
+</html>
+<br><br>
+
+<script src="{{ url_for('static', filename='js/dashbord.js') }}"></script>
