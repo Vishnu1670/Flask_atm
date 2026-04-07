@@ -277,3 +277,47 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 });
+
+//delete
+document.addEventListener("DOMContentLoaded", function(){
+
+    let deleteBtn = document.getElementById("delete_btn");
+
+    if(deleteBtn){
+
+        let acc_no = deleteBtn.getAttribute("data-acc");
+
+        deleteBtn.addEventListener("click", function(){
+
+            let confirmDelete = confirm("Are you sure you want to delete your account?");
+
+            if(confirmDelete){
+
+                fetch(`/home/delete/${acc_no}`, {
+                    method: "DELETE"
+                })
+                .then(res => res.json())
+                .then(data => {
+
+                    if(data.error){
+                        alert(data.error);
+                    } else {
+                        alert(data.message);
+
+                        // redirect after delete
+                        window.location.href = "/home";
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err);
+                    alert("Error deleting account");
+                });
+
+            }
+
+        });
+
+    }
+
+});
